@@ -72,7 +72,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'centos',
         # 'HOST': '192.168.0.54',
-        'HOST': '192.168.0.105',
+        'HOST': '192.168.0.67',
         'PORT': 3306,
     }
 }

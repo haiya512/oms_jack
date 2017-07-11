@@ -5,6 +5,7 @@ from assets.models import Assets
 from django.contrib.auth.models import Group
 from accounts.models import User
 from departments.models import Department
+from api.api import my_render
 
 # Create your views here.
 
@@ -32,5 +33,6 @@ def index(request, template_name='dashboard/index.html'):
                                                'account_list': account_list,
                                                'unused_servers': unused_servers,
                                                })
+        return my_render(template_name, )
     else:
         return redirect('user_login')

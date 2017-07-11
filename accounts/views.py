@@ -8,12 +8,14 @@ from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from accounts.models import User
+from api.api import my_render
 
 
 # Create your views here.
 
 
 def login(request, template_name='accounts/login.html'):
+    passwd_is_wrong = True
     if request.method == 'GET':
         form = LoginUserForm()
         return render(request, template_name, {'form': form})
@@ -32,11 +34,13 @@ def login(request, template_name='accounts/login.html'):
                 else:
                     return HttpResponse("用户非staff用户，禁止登陆后台")
             else:
-                return render(request,
-                              template_name, {'from': form, 'password_is_wrong': True}
-                              )
+                # return render(request,
+                #               template_name, {'from': form, 'password_is_wrong': True}
+                #               )
+                return my_render(template_name, locals(), request)
         else:
-            return render(request, template_name, {'form': form})
+            # return render(request, template_name, {'form': form})
+            return my_render(template_name, locals(), request)
 
 
 @login_required
@@ -71,7 +75,8 @@ def user_add(request, template_name='accounts/user_add.html'):
                 return redirect('user_list')
         else:
             form = UserForm()
-        return render(request, template_name, {'form': form, 'username': username, 'var2': 'active'})
+        # return render(request, template_name, {'form': form, 'username': username, 'var2': 'active'})
+        return my_render(template_name, locals(), request)
     else:
         return HttpResponse("权限不够")
 
@@ -88,20 +93,24 @@ def user_edit(request, pk, template_name='accounts/user_edit.html'):
         if form.is_valid():
             form.save()
             return redirect('user_list')
-        return render(request, template_name, {'form': form, 'username': username, 'uid': pk})
+        # return render(request, template_name, {'form': form, 'username': username, 'uid': pk})
+        return my_render(template_name, locals(), request)
     else:
         return HttpResponse("权限不够")
 
 
 def user_detail(request, pk, template_name='accounts/user_detail.html'):
+    username = request.session['username']
+    active = 'active'
     try:
         user = User.objects.get(pk=pk)
     except User.DoesNotExist:
         raise Http404
-    return render(request, template_name, {'user': user,
-                                           'var2': 'active',
-                                           'highlight2': 'active',
-                                           'username': request.session['username']})
+    # return render(request, template_name, {'user': user,
+    #                                        'var2': 'active',
+    #                                        'highlight2': 'active',
+    #                                        'username': request.session['username']})
+    return my_render(template_name, locals(), request)
 
 # @login_required
 # def user_delete(request, pk, template_name='Accounts/user_confirm_delete.html'):

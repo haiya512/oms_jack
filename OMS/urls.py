@@ -3,7 +3,6 @@ from django.conf import settings
 
 
 urlpatterns = patterns('',
-
                        url(r'accounts/', include('accounts.urls')),
                        url(r'dashboard/', include('dashboard.urls')),
                        url(r'departments/', include('departments.urls')),
