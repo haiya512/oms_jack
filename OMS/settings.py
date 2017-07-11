@@ -114,7 +114,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 SALT_FILES_ROOT = '/srv/salt/'
 
-salt_api_url = 'https://127.0.0.1:8000/'
+salt_api_url = 'http://127.0.0.1:8000/'
 salt_api_user = 'admin'
 salt_api_password = 'admin'
 
